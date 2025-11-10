@@ -13,6 +13,7 @@ The ESP32 MultiBoard is a custom board that helps makers to connect an ESP32 wit
 ![Pinout](resources/MultiBoard_Pinout.png)
 
 ---
+---
 
 ## 🧩 Specifications
 
