@@ -2,7 +2,7 @@
 
 
 
-![Board](resources/MultiBoard.png)
+![Board](resources/v1_1/MultiBoard%203D.png)
 
 The ESP32 MultiBoard is a custom board that helps makers to connect an ESP32 with all kind of sensors and actuators, using most common connectors such as Qwiic and Grove. 
 
@@ -14,7 +14,7 @@ A basic ESPHome firmware can be downloaded [here](firmware/ESPHome.yml)
 
 ## Pinout
 
-![Pinout](resources/MultiBoard_Pinout.png)
+![Pinout](resources/v1_1/Multiboard_Pinout.png)
 
 ---
 ---
@@ -33,7 +33,7 @@ A basic ESPHome firmware can be downloaded [here](firmware/ESPHome.yml)
 
 ---
 
-![Board](resources/MultiBoard_dimensions.png)
+![Board](resources/v1_1/MultiBoard_dimensions.png)
 
 ---
 
