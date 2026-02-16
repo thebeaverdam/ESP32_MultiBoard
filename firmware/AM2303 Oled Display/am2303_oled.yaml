@@ -1,0 +1,47 @@
+esphome:
+  name: am2303-oled-display
+  friendly_name: AM2303 OLED Display
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+
+i2c:
+  sda: 21
+  scl: 22
+  scan: true
+
+sensor:
+  - platform: dht
+    pin: 26
+    model: AM2302 # AM2303 is usually compatible with AM2302/DHT22 settings
+    temperature:
+      name: "Temperature"
+      id: temp
+    humidity:
+      name: "Humidity"
+      id: hum
+    update_interval: 1s
+
+font:
+  - file: "gfonts://Roboto"
+    id: my_font
+    size: 16
+
+display:
+  - platform: ssd1306_i2c
+    model: "SH1106 128x64" # 1.3" displays are often SH1106
+    address: 0x3C
+    lambda: |-
+      it.print(0, 0, id(my_font), "Temp & Hum");
+      if (id(temp).has_state()) {
+        it.printf(0, 20, id(my_font), "Temp: %.1f °C", id(temp).state);
+      }
+      if (id(hum).has_state()) {
+        it.printf(0, 40, id(my_font), "Hum: %.1f %%", id(hum).state);
+      }
