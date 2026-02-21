@@ -1,12 +1,24 @@
 esphome:
-  name: esp32-wroom32ue
-  friendly_name: ESP32 WROOM32UE Base
-  platform: ESP32
-  board: esp32dev
+  name: esp32-multiboard
+  friendly_name: ESP32 MultiBoard
   name_add_mac_suffix: true
+  project:
+    name: "thebeaverdam.esp32-multiboard"
+    version: "1.0.0"
+
+esp32:
+  board: esp32dev
+  
+  framework:
+    type: esp-idf
 
 # Logs 
 logger:
+
+mdns:
+
+esp32_improv:
+  authorizer: none
 
 # HA direct comunication
 api:
@@ -14,59 +26,21 @@ api:
 
 # OTA
 ota:
+  platform: esphome
   
 
 # WiFi: starts in AP mode + Captive Portal 
 wifi:
   ap:
-    ssid: "ESP32_Setup_${device_name}"
-    password: "12345678"
+    ssid: "Setup_${device_name}"
 
+    
+dashboard_import:
+  package_import_url: github://thebeaverdam/ESP32_MultiBoard/firmware/ESPHome.yaml
 
 captive_portal:
 
-
-web_server:
-  port: 80
-
-# Sys info
-text_sensor:
-  - platform: version
-    name: "${friendly_name} Firmware Version"
-  - platform: wifi_info
-    ip_address:
-      name: "${friendly_name}  IP Address"
+ 
 
 
-sensor:
-  - platform: wifi_signal
-    name: "${friendly_name} Wifi signal"
-    update_interval: 60s
-
-  - platform: adc
-    pin: 34
-    name: "${friendly_name} Analog Input 1 (GPIO34)"
-    update_interval: 2s
-    attenuation: 11db
-
-  - platform: adc
-    pin: 35
-    name: "${friendly_name}  Analog Input 2 (GPIO35)"
-    update_interval: 2s
-    attenuation: 11db
-
-# SPI BUS
-spi:
-  clk_pin: 18
-  mosi_pin: 23
-  miso_pin: 19
-  id: bus_spi_0
-
-
-#  I2C BUS
-i2c:
-  sda: 21
-  scl: 22
-  scan: true
-  id: bus_i2c_0
 

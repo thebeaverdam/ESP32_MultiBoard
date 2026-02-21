@@ -13,7 +13,7 @@ A serial adapter is needed for programming the board for the first time. Once co
 
 A basic ESPHome firmware can be downloaded [here](firmware/ESPHome.yml)
 
-[AM3202 with Oled Display](/firmware/AM2303%20Oled%20Display/README.md)
+[AM3202 with Oled Display](firmware/AM2303%20Oled%20Display/README.md)
 
 
 <br></br>
