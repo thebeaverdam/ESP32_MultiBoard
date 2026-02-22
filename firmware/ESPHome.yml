@@ -32,11 +32,11 @@ ota:
 # WiFi: starts in AP mode + Captive Portal 
 wifi:
   ap:
-    ssid: "Setup_${device_name}"
+    ssid: "Setup_MultiBoard"
 
     
 dashboard_import:
-  package_import_url: github://thebeaverdam/ESP32_MultiBoard/firmware/ESPHome.yaml
+  package_import_url: github://thebeaverdam/ESP32_MultiBoard/firmware/ESPHome.yml
 
 captive_portal:
 
