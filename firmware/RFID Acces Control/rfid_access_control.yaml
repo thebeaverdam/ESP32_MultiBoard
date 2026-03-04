@@ -1,0 +1,88 @@
+substitutions:
+  device_name: rfid-access-control
+  friendly_name: "RFID Access Control"
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Configuración del bus SPI para el MFRC522
+# Pines proporcionados por el usuario
+spi:
+  clk_pin: GPIO18
+  mosi_pin: GPIO23
+  miso_pin: GPIO19
+
+# Configuración del bus I2C para el Display LCD 16x2 (asumiendo adaptador I2C PCF8574)
+i2c:
+  sda: GPIO21
+  scl: GPIO22
+  scan: true
+
+# Configuración del lector RFID MFRC522 (Cambiado a rc522_spi)
+rc522_spi:
+  cs_pin: GPIO05
+  on_tag:
+    then:
+      - lcd.backlight: on
+      - lambda: |-
+          it.clear();
+          it.print(0, 0, "UID Detectado:");
+          it.print(0, 1, x.c_str()); // Muestra el número de serie (UID)
+      - delay: 2s
+      - lambda: |-
+          it.clear();
+          if (x == "12-34-56-78") {
+            it.print(0, 0, "Usuario:");
+            it.print(0, 1, "Juan Perez");
+          } else if (x == "AA-BB-CC-DD") {
+            it.print(0, 0, "Usuario:");
+            it.print(0, 1, "Maria Garcia");
+          } else if (x == "99-88-77-66") {
+            it.print(0, 0, "Usuario:");
+            it.print(0, 1, "Carlos Ruiz");
+          } else {
+            it.print(0, 0, "ID DESCONOCIDO");
+            it.print(0, 1, x.c_str());
+          }
+      - delay: 4s
+      - lambda: |-
+          it.clear();
+          it.print(0, 0, "ESPERANDO...");
+          it.print(0, 1, "PASE TARJETA");
+
+# Configuración del display LCD 16x2
+display:
+  - platform: lcd_pcf8574
+    id: my_lcd
+    dimensions: 16x2
+    address: 0x27  # Dirección común 0x27 o 0x3F
+    lambda: |-
+      // Este bloque se ejecuta al iniciar o si no hay acciones pendientes
+      static bool initial = true;
+      if (initial) {
+        it.print(0, 0, "SISTEMA LISTO");
+        it.print(0, 1, "PASE TARJETA");
+        initial = false;
+      }
+
+# Componentes estándar
+logger:
+  level: DEBUG
+
+api:
+
+ota:
+  - platform: esphome
+
+wifi:
+  # Podrás configurar el WiFi mediante el Portal Cautivo si no encuentra red
+  ap:
+    ssid: "RFID-Config"
+  
+captive_portal:
